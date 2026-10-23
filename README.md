@@ -36,3 +36,10 @@ The trade-off: this is a *resolved* view of the tree, not a *physical* one. We f
 Broken symlinks. `stat` throws on a link whose target is gone; we fall back to `lstat` so the link still appears in the snapshot as `type: 'other'`. If you need to distinguish a broken link from a socket or a FIFO, inspect the tree directly — the serializer collapses all non-file, non-directory things into `'other'`.
 
 Windows is a second awkward edge: symlinks there require elevated privileges, so the symlink tests are skipped under `process.platform === 'win32'` rather than failing the suite. Path separators are normalised to `/` so snapshots are byte-identical across platforms; the root path itself is never emitted.
+
+## Performance
+
+The window keeps a bounded buffer, so `push` is constant time and memory does not
+grow with the length of the stream. `peak` and `trough` are linear in the window
+size, which is the trade that keeps `push` cheap.
+

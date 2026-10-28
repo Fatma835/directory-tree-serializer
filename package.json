@@ -1,6 +1,6 @@
 {
   "name": "directory-tree-serializer",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Walks a directory tree and emits a deterministic JSON structure of paths, sizes, and types suitable for snapshot comparison.",
   "type": "module",
   "main": "src/index.js",
